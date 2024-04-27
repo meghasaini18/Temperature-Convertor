@@ -1,2 +1,84 @@
 # Temperature-Convertor
 #It convert celsius to fahrenheit and vise - versa
+
+package sample;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.util.Optional;
+
+public class Main extends Application {
+    public static void main(String[] args)
+{
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        FXMLLoader loader = new
+                FXMLLoader(getClass().getResource("sample.fxml"));
+        VBox rootNode = loader.load();
+        MenuBar menuBar = createmenu();
+        rootNode.getChildren().add(0, menuBar);
+
+        Scene scene = new Scene(rootNode, 300, 275);
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Target App");
+        primaryStage.show();
+
+    }
+    private MenuBar createmenu(){
+
+        //File Menu
+        Menu fileMenu = new Menu("File");
+        SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
+        MenuItem newMenuItem = new MenuItem("New");
+        newMenuItem.setOnAction(event -> {
+            System.out.println("new Menu Item Clicked");
+        });
+
+        MenuItem exitMenuItem = new MenuItem("Exit");
+        exitMenuItem.setOnAction(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
+        fileMenu.getItems().addAll(newMenuItem, separatorMenuItem, exitMenuItem);
+
+        // Help Menu
+        Menu helpMenu = new Menu("Help");
+        MenuItem aboutApp = new MenuItem("About");
+        aboutApp.setOnAction(event -> {
+            AboutApp();
+        });
+
+        helpMenu.getItems().addAll(aboutApp);
+
+        //MenuBar
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(fileMenu, helpMenu);
+        return menuBar;
+    }
+
+    private void AboutApp() {
+        Alert alertDialog = new Alert(Alert.AlertType.INFORMATION);
+        alertDialog.setTitle("My first Desktop App");
+        alertDialog.setHeaderText("Learning JavaFX");
+        alertDialog.setContentText("I am just a beginner but soon i will become a pro java game developer");
+        ButtonType YesBtn = new ButtonType("Yes");
+        ButtonType NoBtn = new ButtonType("No");
+        alertDialog.getButtonTypes().setAll(YesBtn, NoBtn);
+        Optional <ButtonType> ClickedBtn = alertDialog.showAndWait();
+
+    }
+
+}
+
